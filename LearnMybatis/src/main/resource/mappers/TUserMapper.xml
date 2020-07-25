@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.lxseason.mybatis.mapper.TUserMapper">
+    <select id="selectByPrimaryKey" resultType="com.lxseason.mybatis.entity.TUser">
+        select
+        id,userName,realName,sex,mobile,email
+        from t_user
+        where id =?
+    </select>
+    <select id ="selectAll" resultType="com.lxseason.mybatis.entity.TUser">
+        select
+        id,userName,realName,sex,mobile,email
+        from t_user
+    </select>
+</mapper>
