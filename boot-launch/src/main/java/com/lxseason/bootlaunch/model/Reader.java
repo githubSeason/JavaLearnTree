@@ -1,0 +1,9 @@
+package com.lxseason.bootlaunch.model;
+
+import lombok.Data;
+
+@Data
+public class Reader {
+    private String name;
+    private int age;
+}

@@ -18,18 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
     @RequestMapping("/hello")
     public String hello(){
-        Article article = new Article(01L,"lxseason");
-        article.setAuthor("lxSeason");
         Article article1 = Article.builder().id(2L).author("LxSeason").build();
         log.info("（@Slf4j 注解增加的logger）一次hello被请求");
         return article1.toString();
     }
 }
-/**
- * RESTFul风格API的好处
- * 1.看url就知道要什么资源（uri只描述资源，不描述对资源的操作）
- * 2.看http method就知道针对资源干什么（http方法：POST/DELETE/PUT/GET分别对应对资源的增、删、改、查，GET方法不应该改变数据）
- * 3.看http status code 就知道结果如何
- *
- * 规范类程序员的代码开发，为前后端交互减少沟通成本，是“约定大于配置”的体现
- */
+
