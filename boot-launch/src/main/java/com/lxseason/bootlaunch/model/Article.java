@@ -25,6 +25,7 @@ public class Article {
     private String title;
     private String content;
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "CMT+8")//是Jackson常用注解，指定属性格式。可以在配置中统一对日期格式设置，就不用在日期属性上加注解
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 //    @JsonInclude(JsonInclude.Include.NON_NULL)//是Jackson常用注解，排除为空元素不做序列化反序列化
     private List<Reader> reader;

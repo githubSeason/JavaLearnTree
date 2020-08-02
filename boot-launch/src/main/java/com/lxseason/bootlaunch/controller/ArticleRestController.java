@@ -2,9 +2,11 @@ package com.lxseason.bootlaunch.controller;
 
 import com.lxseason.bootlaunch.model.AjaxResponse;
 import com.lxseason.bootlaunch.model.Article;
+import com.lxseason.bootlaunch.service.ArticleRestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -19,6 +21,8 @@ import java.util.Date;
 @RestController//将类方法的返回结果转为json，等效于在方法的方法前加@ResponseBody + 在类前加@Controller
 @RequestMapping("/rest")    //定义在父页面上的路径
 public class ArticleRestController {
+    @Resource
+    ArticleRestService articleRestService;
 //    @RequestMapping(value ="/article" ,method = RequestMethod.POST,produces = "application/json")
     @PostMapping(value ="/article")//上边@RequestMapping写法的简化版
 //    public @ResponseBody AjaxResponse saveArticle(@RequestParam String id,
