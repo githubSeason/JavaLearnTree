@@ -3,6 +3,7 @@ package com.lxseason.bootlaunch.controller;
 import com.lxseason.bootlaunch.model.AjaxResponse;
 import com.lxseason.bootlaunch.model.Article;
 import com.lxseason.bootlaunch.service.ArticleRestService;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,23 @@ import java.util.Date;
 public class ArticleRestController {
     @Resource
     ArticleRestService articleRestService;
+
+    /**
+     * 对swagger发布的Api接口进行配置描述
+     */
+    @ApiOperation(value = "添加文章" ,notes = "添加新的文章" ,tags = "Article" ,httpMethod = "POST")
+    @ApiResponses({
+            @ApiResponse(code = 200 ,message = "成功" ,response = AjaxResponse.class),
+            @ApiResponse(code = 400 ,message = "用户输入错误" ,response = AjaxResponse.class),
+            @ApiResponse(code = 500 ,message = "系统内部错误" ,response = AjaxResponse.class)
+    })
+    //对请求方法的@RequestParam参数进行swagger的描述说明
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "title" ,value ="文章标题" ,required = true ,dataType = ),
+//            @ApiImplicitParam(name = "content" ,value ="文章内容" ,required = true ,dataType = ),
+//            @ApiImplicitParam(name = "author" ,value ="文章作者" ,required = true ,dataType = )
+//    })
+
 //    @RequestMapping(value ="/article" ,method = RequestMethod.POST,produces = "application/json")
     @PostMapping(value ="/article")//上边@RequestMapping写法的简化版
 //    public @ResponseBody AjaxResponse saveArticle(@RequestParam String id,
