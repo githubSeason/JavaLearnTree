@@ -1,7 +1,12 @@
-server:
-  port: 8080
-
+#切换环境的方式
+#   1.通过配置application.xml，application.xml是默认使用的配置文件，其中spring.profiles.active设置使用哪一个配置文件
+#   application-prod.xml与application.xml配置类相同配置,application-prod.xml配置优先级更高
+#   2.命令行方式：将项目打成jar包，在jar包的目录下打开命令行，使用命令启动
+#     java -jar spring-boot-profile.jar --spring.profiles.active=prod
+#     优点：不用在jar包内部修改配置去切换不同环境的配置,在启动jar包时传一个参数就能切换（方便于持续集成的部署这类场景）
+#配置优先级：
+  #外部大于内部，命令行参数配置优先级大于application.xml
+  #特指大于泛指，application-prod.xml中的参数配置优先级大于application.xml
 spring:
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-#    time-zone: CMT+8
+  profiles:
+    active: prod  #切换不换不同环境的配置

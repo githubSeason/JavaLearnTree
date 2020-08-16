@@ -1,0 +1,55 @@
+#Jasypt是一个Java库，允许开发人员以很简单的方式添加基本的加密功能，而无需深入研究加密原理，
+#利用它可以实现高安全性的，基于标准的加密技术，无论是单项和双向加密。加密密码，文本，数字，二进制文件。
+#需要加密的值：使用jasypt.bat对待加密的内容进行加密，将输出的解密后的加密串用ENC()进行包裹处理，覆盖需要加密的值
+#注jasypt.bat脚本中依赖的jar包需要单独下载
+#设置盐值，在生成环境中，切记不要直接进行设置，可通过环境变量、命令行等形式进行设置
+#（防君子，不防小人）对敏感信息进行基本的脱敏加密，是为了防止源码泄露时，敏感信息直接暴露，秘钥一般是人为刻意泄露的
+#命令行存储示例：java -jar xxx.jar --jasypt.encryptor.password=盐值(秘钥)
+#  <dependency>
+#  <groupId>com.github.ulisesbocchio</groupId>
+#  <artifactId>jasypt-spring-boot-starter</artifactId>
+# <version>1.18</version>
+# </dependency>
+server:
+  port: 8084
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: CMT+8
+
+# 1.一个家庭有爸爸、妈妈、孩子 (对象)
+# 2.这个家庭有一个名字（family-name）叫"happy family"（配置内容中有空格用双引号或单引号括起来）
+# 3.爸爸有名字（name）和年龄（age）两个属性
+# 4.妈妈两个别名 (list)
+# 5.孩子除了名字（name）和年龄（age）属性，还有一个friends的集合（数组）
+# 6.每个friends有两个属性hobby爱好和性别sex
+
+#1.占位符：${random.int[1024,2048]}
+#2.默认值：${father.name}/${father.name:aa_son}
+#3.字符串值的单双引号
+#   双引号：不会转义内容中特殊字符，特殊字符会以本身意思存在
+#   单引号#会转义特殊字符，特殊字符以普通符合存在）
+#4.支持松散结构：family-name = familyName = family_name
+
+family:
+  family-name: "happy family"
+  father:
+    name: aa
+    age: 30
+  mother:
+    alias:
+      - lovly
+      - alice
+  child:
+    name: a1
+    age: ${family.father.age:5}
+    friends:
+      - hobby: football
+        sex: male
+      - hobby: dance
+        sex : female
+#密钥（盐值）一般不写在配置文件中，
+  jasypt:
+    encryptor:
+      password: 123456
