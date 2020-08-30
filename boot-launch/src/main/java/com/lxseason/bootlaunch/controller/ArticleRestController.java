@@ -2,7 +2,7 @@ package com.lxseason.bootlaunch.controller;
 
 import com.lxseason.bootlaunch.model.AjaxResponse;
 import com.lxseason.bootlaunch.model.Article;
-import com.lxseason.bootlaunch.service.ArticleRestService;
+import com.lxseason.bootlaunch.service.ArticleRestTestService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +20,10 @@ import java.util.Date;
  */
 @Slf4j
 @RestController//将类方法的返回结果转为json，等效于在方法的方法前加@ResponseBody + 在类前加@Controller
-@RequestMapping("/rest")    //定义在父页面上的路径
+@RequestMapping("/restTest")    //定义在父页面上的路径
 public class ArticleRestController {
     @Resource
-    ArticleRestService articleRestService;
+    ArticleRestTestService articleRestService;
 
     /**
      * 对swagger发布的Api接口进行配置描述

@@ -9,4 +9,4 @@
   #特指大于泛指，application-prod.xml中的参数配置优先级大于application.xml
 spring:
   profiles:
-    active: prod  #切换不换不同环境的配置
+    active: dev  #切换不换不同环境的配置

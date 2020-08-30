@@ -1,9 +1,7 @@
 package com.lxseason.bootlaunch.mockstub;
 
-import com.lxseason.bootlaunch.controller.ArticleRestController;
-import com.lxseason.bootlaunch.service.ArticleRestService;
+import com.lxseason.bootlaunch.service.ArticleRestTestService;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.annotation.Resource;
 
@@ -35,7 +32,7 @@ public class ArticleRestControllerTest2 {
     @Resource
     private MockMvc mockMvc;//@Resource把MockMvc依赖注入到启动的spring的容器中来使用
     @Resource
-    ArticleRestService articleRestService;//注入自定义的依赖，
+    ArticleRestTestService articleRestService;//注入自定义的依赖，
 //    @Before
 //    public void setUp(){//构建mockMvc对象，用来模拟网络请求
 //        mockMvc = MockMvcBuilders.standaloneSetup(new ArticleRestController()).build();
