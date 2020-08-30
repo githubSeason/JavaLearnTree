@@ -3,6 +3,7 @@ package com.lxseason.bootlaunch.config;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -20,9 +21,11 @@ import javax.sql.DataSource;
  * 3、在service层修改ArticleRestJDBCServiceImpl（ArticleJDBCMultDSDao替换ArticleJDBCDAO）
  *      加载并使用primaryJdbcTemplate、secondaryJdbcTemplate对象来操作不同数据库
  *      （注意：ArticleJDBCDAO中的@Resource 需要暂时注释掉，因为多数据源情况下仍注入默认jdbcTemplate会报错）
+ * 注：javax.sql.DataSource的默认数据源不能保证分布式事务
  */
 @Configuration
 public class DataSourceConfig {
+    /*javax.sql.DataSource不能保证分布式事务的多数据源
     @Primary
     @Bean(name = "primaryDataSource")
     @Qualifier("primaryDataSource")
@@ -48,5 +51,33 @@ public class DataSourceConfig {
     public JdbcTemplate secondaryJdbcTemplate(
             @Qualifier("secondaryDataSource") DataSource dataSource){
         return new JdbcTemplate(dataSource);
+    }
+    */
+
+    /*atomikos分布式事务的多数据源*/
+    @Bean(initMethod = "init" ,destroyMethod = "close" ,name = "primaryDataSource")
+    @Primary
+    @ConfigurationProperties(prefix = "primarydb")
+    public DataSource primaryDataSource(){
+        return new AtomikosDataSourceBean();
+    }
+
+    //jta数据源1
+    @Bean(initMethod = "init" ,destroyMethod = "close" ,name = "secondaryDataSource")
+    @ConfigurationProperties(prefix = "secondarydb")
+    public DataSource secondaryDataSource(){
+        return new AtomikosDataSourceBean();
+    }
+
+    @Bean
+    public JdbcTemplate primaryJdbcTemplate(
+            @Qualifier("primaryDataSource") DataSource primaryDataSource){
+        return new JdbcTemplate(primaryDataSource);
+    }
+
+    @Bean
+    public JdbcTemplate secondaryJdbcTemplate(
+            @Qualifier("secondaryDataSource") DataSource secondaryDataSource){
+        return new JdbcTemplate(secondaryDataSource);
     }
 }

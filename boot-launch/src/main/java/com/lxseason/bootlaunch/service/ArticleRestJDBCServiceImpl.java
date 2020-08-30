@@ -54,10 +54,19 @@ public class ArticleRestJDBCServiceImpl implements ArticleRestService {
 
     @Resource
     JdbcTemplate secondaryJdbcTemplate;
-    //一次保存操作分别向两个库中写数据
+
+    /**
+     * @Transactional注解可实现单数据源的事务
+     * @Transactional是面向切的，先打开的资源后关闭，后打开的资源先关闭，
+     * 所以secondaryJdbcTemplate会执行成功，而primaryJdbcTemplate会因异常回滚，不能保证分布式事务
+     */
+    @Transactional
+    @Override
     public Article saveArticle(@RequestBody Article article){
+        //一次保存操作分别向两个库中写数据
         articleJDBCMultDSDao.save(article ,primaryJdbcTemplate);
         articleJDBCMultDSDao.save(article ,secondaryJdbcTemplate);
+        int a =1/0; //制造运行时异常
         return article;
     }
 
