@@ -5,8 +5,20 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
 #    time-zone: CMT+8
+#  datasource:
+#    url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
+#    username: sa
+#    password: sa
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
   datasource:
-    url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
-    username: sa
-    password: sa
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    primary:
+      jdbc-url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
+      username: sa
+      password: sa
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    secondary:
+      jdbc-url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=testdb1
+      username: sa
+      password: sa
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver

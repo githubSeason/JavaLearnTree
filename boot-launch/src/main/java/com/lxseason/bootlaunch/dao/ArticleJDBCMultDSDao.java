@@ -1,6 +1,5 @@
 package com.lxseason.bootlaunch.dao;
 
-import com.lxseason.bootlaunch.model.AjaxResponse;
 import com.lxseason.bootlaunch.model.Article;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,34 +9,16 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 1、添加pom依赖
- *          <dependency>
- *             <groupId>org.springframework.boot</groupId>
- *             <artifactId>spring-boot-starter-jdbc</artifactId>
- *         </dependency>
- *         <dependency>
- *             <groupId>com.microsoft.sqlserver</groupId>
- *             <artifactId>sqljdbc41</artifactId>
- *             <version>6.0</version>
- *         </dependency>
- * 2、配置文件中增加数据库连接信息
- *  spring:
- *    datasource:
- *      url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
- *      username: sa
- *      password: sa
- *      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
- * 3、先创建dao层对数据库的各种操作的对象ArticleJDBCDAO
- * 4、去service层创建ArticleRestService接口和ArticleRestJDBCServiceImpl，并在ArticleRestJDBCServiceImpl使用ArticleJDBCDAO对象实现各种业务数据操作
- * 5、去controller层创建ArticleRestJDBCController使用ArticleRestJDBCServiceImpl
+ * spring JDBC多数据源访问对象
+ * 注入primaryJdbcTemplate作为默认的数据库操作对象
+ * 将jdbcTemplate作为参数传入ArticleJDBCMultDSDao，实现传入不同的template操作不同的库
  */
-
-@Repository  //@Repository是用于标注持久层对象的注解，会把ArticleJDBCDAO注入到spring的上下文环境中
-public class ArticleJDBCDAO {
-//    @Resource
-    private JdbcTemplate jdbcTemplate;
+@Repository  //@Repository是用于标注持久层对象的注解，会把ArticleJDBCMultDSDao注入到spring的上下文环境中
+public class ArticleJDBCMultDSDao {
+    @Resource
+    private JdbcTemplate primaryJdbcTemplate;
     //保存文章
-    public void save(Article article){
+    public void save(Article article ,JdbcTemplate jdbcTemplate){
         //jdbcTemplate.update适合于insert、update和delete操作
         jdbcTemplate.update("INSERT INTO article(author,title,content,createTime) values(?,?,?,?)",
                 article.getAuthor(),
@@ -47,13 +28,13 @@ public class ArticleJDBCDAO {
     }
 
     //删除文章
-    public void deleteById(Long id){
+    public void deleteById(Long id ,JdbcTemplate jdbcTemplate){
         //jdbcTemplate.update适合于insert、update和delete操作
         jdbcTemplate.update("DELETE FROM article WHERE id = ?",new Object[]{id});
     }
 
     //更新文章
-    public void updateById(Article article){
+    public void updateById(Article article ,JdbcTemplate jdbcTemplate){
         //jdbcTemplate.update适合于insert、update和delete操作
         jdbcTemplate.update("UPDATE article SET author = ?,title = ?,content = ?,createTime = ? WHERE id =?",
                 article.getAuthor(),
@@ -64,12 +45,12 @@ public class ArticleJDBCDAO {
     }
 
     //根据id查找文章
-    public Article findById(Long id){
+    public Article findById(Long id ,JdbcTemplate jdbcTemplate){
         //queryForObject用于查询单条记录返回结果
         return (Article) jdbcTemplate.queryForObject("SELECT * FROM article WHERE id = ?",new Object[]{id},new BeanPropertyRowMapper(Article.class));
     }
     //查询所有
-    public List<Article> findAll(){
+    public List<Article> findAll(JdbcTemplate jdbcTemplate){
         //query用于查询结果列表
         return (List<Article>) jdbcTemplate.query("SELECT * FROM article",new BeanPropertyRowMapper(Article.class));
     }
