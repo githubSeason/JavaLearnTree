@@ -11,7 +11,7 @@ import javax.transaction.SystemException;
 import javax.transaction.TransactionManager;
 import javax.transaction.UserTransaction;
 
-@Configuration
+//@Configuration
 public class TransactionManagerConfig {
     @Bean
     public UserTransaction userTransaction() throws SystemException {

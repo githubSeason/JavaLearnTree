@@ -55,29 +55,29 @@ public class DataSourceConfig {
     */
 
     /*atomikos分布式事务的多数据源*/
-    @Bean(initMethod = "init" ,destroyMethod = "close" ,name = "primaryDataSource")
-    @Primary
-    @ConfigurationProperties(prefix = "primarydb")
-    public DataSource primaryDataSource(){
-        return new AtomikosDataSourceBean();
-    }
-
-    //jta数据源1
-    @Bean(initMethod = "init" ,destroyMethod = "close" ,name = "secondaryDataSource")
-    @ConfigurationProperties(prefix = "secondarydb")
-    public DataSource secondaryDataSource(){
-        return new AtomikosDataSourceBean();
-    }
-
-    @Bean
-    public JdbcTemplate primaryJdbcTemplate(
-            @Qualifier("primaryDataSource") DataSource primaryDataSource){
-        return new JdbcTemplate(primaryDataSource);
-    }
-
-    @Bean
-    public JdbcTemplate secondaryJdbcTemplate(
-            @Qualifier("secondaryDataSource") DataSource secondaryDataSource){
-        return new JdbcTemplate(secondaryDataSource);
-    }
+//    @Bean(initMethod = "init" ,destroyMethod = "close" ,name = "primaryDataSource")
+//    @Primary
+//    @ConfigurationProperties(prefix = "primarydb")
+//    public DataSource primaryDataSource(){
+//        return new AtomikosDataSourceBean();
+//    }
+//
+//    //jta数据源1
+//    @Bean(initMethod = "init" ,destroyMethod = "close" ,name = "secondaryDataSource")
+//    @ConfigurationProperties(prefix = "secondarydb")
+//    public DataSource secondaryDataSource(){
+//        return new AtomikosDataSourceBean();
+//    }
+//
+//    @Bean
+//    public JdbcTemplate primaryJdbcTemplate(
+//            @Qualifier("primaryDataSource") DataSource primaryDataSource){
+//        return new JdbcTemplate(primaryDataSource);
+//    }
+//
+//    @Bean
+//    public JdbcTemplate secondaryJdbcTemplate(
+//            @Qualifier("secondaryDataSource") DataSource secondaryDataSource){
+//        return new JdbcTemplate(secondaryDataSource);
+//    }
 }

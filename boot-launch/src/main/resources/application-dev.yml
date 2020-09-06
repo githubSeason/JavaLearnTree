@@ -6,11 +6,17 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
 #    time-zone: CMT+8
   #单数据源配置
-#  datasource:
-#    url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
-#    username: sa
-#    password: sa
-#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  datasource:
+    url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
+    username: sa
+    password: sa
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: sql_server
+    show-sql: true
   #多数据源配置
 #  datasource:
 #    primary:
@@ -23,27 +29,28 @@ spring:
 #      username: sa
 #      password: sa
 #      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  #atomikos多数据源分布式事务配置(本机sqlserver没有分布式服务组件所以不能调试通过)
-primarydb:
-  uniqueResourceName: primary
-  xaDataSourceClassName: com.microsoft.sqlserver.jdbc.SQLServerXADataSource
-  xaProperties:
-    url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
-    username: sa
-    password: sa
-  exclusiveConnectionMode: true
-  minPoolSize: 3
-  maxPoolSize: 10
-  testQuery: SELECT 1 FROM dual #由于采用HikiriCP，用于检测数据库连接是否存活
 
-secondarydb:
-  uniqueResourceName: secondary
-  xaDataSourceClassName: com.microsoft.sqlserver.jdbc.SQLServerXADataSource
-  xaProperties:
-    url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
-    username: sa
-    password: sa
-  exclusiveConnectionMode: true
-  minPoolSize: 3
-  maxPoolSize: 10
-  testQuery: SELECT 1 FROM dual #由于采用HikiriCP，用于检测数据库连接是否存活
+#atomikos多数据源分布式事务配置(本机sqlserver没有分布式服务组件所以不能调试通过)
+#primarydb:
+#  uniqueResourceName: primary
+#  xaDataSourceClassName: com.microsoft.sqlserver.jdbc.SQLServerXADataSource
+#  xaProperties:
+#    url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
+#    username: sa
+#    password: sa
+#  exclusiveConnectionMode: true
+#  minPoolSize: 3
+#  maxPoolSize: 10
+#  testQuery: SELECT 1 FROM dual #由于采用HikiriCP，用于检测数据库连接是否存活
+#
+#secondarydb:
+#  uniqueResourceName: secondary
+#  xaDataSourceClassName: com.microsoft.sqlserver.jdbc.SQLServerXADataSource
+#  xaProperties:
+#    url: jdbc:sqlserver://127.0.0.1:1433; DatabaseName=test
+#    username: sa
+#    password: sa
+#  exclusiveConnectionMode: true
+#  minPoolSize: 3
+#  maxPoolSize: 10
+#  testQuery: SELECT 1 FROM dual #由于采用HikiriCP，用于检测数据库连接是否存活
